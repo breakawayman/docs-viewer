@@ -1,0 +1,697 @@
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,650&family=IBM+Plex+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;500;600&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  font-family: "IBM Plex Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans", Helvetica, Arial,
+    sans-serif, "Apple Color Emoji", "Segoe UI Emoji";
+  line-height: 1.5;
+  font-weight: 400;
+
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+h1,
+h2,
+h3 {
+  font-family: "Fraunces", ui-serif, Georgia, Cambria, "Times New Roman", Times, serif;
+}
+
+code,
+pre,
+kbd,
+samp {
+  font-family: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New",
+    monospace;
+}
+
+body {
+  margin: 0;
+}
+
+/* GFM task markers are disabled inputs; draw checked markers explicitly. */
+.prose .task-list-item input[type='checkbox']:checked {
+  appearance: none;
+  position: relative;
+  width: 1em;
+  height: 1em;
+  vertical-align: -0.1em;
+  border: 1px solid #16a34a;
+  border-radius: 3px;
+  background-color: #16a34a;
+  opacity: 1;
+  print-color-adjust: exact;
+  -webkit-print-color-adjust: exact;
+}
+
+.prose .task-list-item input[type='checkbox']:checked::after {
+  content: '';
+  position: absolute;
+  left: 30%;
+  top: 10%;
+  width: 30%;
+  height: 55%;
+  border: solid #fff;
+  border-width: 0 2px 2px 0;
+  transform: rotate(45deg);
+}
+
+/* ===== Scrollbar Styles ===== */
+html {
+  scrollbar-gutter: stable;
+  scrollbar-color: #d4d4d8 #ffffff;
+  scrollbar-width: thin;
+}
+
+html.dark,
+html[data-theme='dark'] {
+  scrollbar-color: #3f3f46 #09090b;
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #e4e4e7;
+  border: 2px solid transparent;
+  background-clip: padding-box;
+  border-radius: 9999px;
+  transition: background 180ms ease;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #d4d4d8;
+  background-clip: padding-box;
+  border: 2px solid transparent;
+  border-radius: 9999px;
+}
+
+::-webkit-scrollbar-thumb:active {
+  background: #a1a1aa;
+  background-clip: padding-box;
+  border: 2px solid transparent;
+  border-radius: 9999px;
+}
+
+::-webkit-scrollbar-corner {
+  background: transparent;
+}
+
+html.dark ::-webkit-scrollbar-thumb,
+html[data-theme='dark'] ::-webkit-scrollbar-thumb {
+  background: #27272a;
+  border: 2px solid transparent;
+  background-clip: padding-box;
+  border-radius: 9999px;
+}
+
+html.dark ::-webkit-scrollbar-thumb:hover,
+html[data-theme='dark'] ::-webkit-scrollbar-thumb:hover {
+  background: #3f3f46;
+  background-clip: padding-box;
+  border: 2px solid transparent;
+  border-radius: 9999px;
+}
+
+html.dark ::-webkit-scrollbar-thumb:active,
+html[data-theme='dark'] ::-webkit-scrollbar-thumb:active {
+  background: #52525b;
+  background-clip: padding-box;
+  border: 2px solid transparent;
+  border-radius: 9999px;
+}
+
+/* Print styles — match the same visual design language as the
+   runtime DocContent window (language-labeled code windows, soft
+   borders, token colors tuned for black-and-white paper) while
+   keeping a laser-friendly, ink-conservative feel. */
+@page {
+  margin: 14mm 15mm 16mm 15mm;
+}
+
+@media print {
+  html,
+  body {
+    background: #ffffff !important;
+    color: #0a0a0a !important;
+    font-family: "IBM Plex Sans", ui-sans-serif, system-ui, -apple-system,
+      "Segoe UI", Roboto, Helvetica, Arial, "Noto Sans", "Apple Color Emoji",
+      "Segoe UI Emoji" !important;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  h1,
+  h2,
+  h3 {
+    font-family: "Fraunces", ui-serif, Georgia, Cambria, "Times New Roman",
+      Times, serif !important;
+    color: #0a0a0a !important;
+    font-weight: 650 !important;
+    letter-spacing: -0.01em;
+    page-break-after: avoid;
+    break-after: avoid-page;
+    orphans: 3;
+    widows: 3;
+  }
+
+  code,
+  pre,
+  kbd,
+  samp {
+    font-family: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo,
+      Monaco, Consolas, "Liberation Mono", "Courier New", monospace !important;
+  }
+
+  #doc-print-toolbar {
+    display: none !important;
+  }
+
+  a {
+    color: #0a0a0a !important;
+    text-decoration: underline !important;
+    text-decoration-color: rgba(39, 39, 42, 0.4) !important;
+    text-underline-offset: 3px !important;
+    text-decoration-thickness: 1px !important;
+  }
+
+  /* Content window card (soft, print-friendly rounded rectangle) */
+  main > .mx-auto {
+    max-width: none !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+
+  /* Prose tune: tighter margins on print, keep the same weights */
+  .prose-zinc {
+    color: #0a0a0a !important;
+    max-width: none !important;
+    font-size: 10.5pt !important;
+    line-height: 1.65 !important;
+  }
+
+  .prose-zinc p,
+  .prose-zinc li,
+  .prose-zinc td {
+    orphans: 3;
+    widows: 3;
+  }
+
+  .prose-zinc h1 {
+    font-size: 22pt !important;
+    line-height: 1.2 !important;
+    margin: 0 0 12pt !important;
+  }
+  .prose-zinc h2 {
+    font-size: 14.5pt !important;
+    line-height: 1.25 !important;
+    margin: 18pt 0 8pt !important;
+    padding-top: 6pt !important;
+    border-top: 1px solid #e4e4e7 !important;
+  }
+  .prose-zinc h3 {
+    font-size: 11.5pt !important;
+    margin: 12pt 0 6pt !important;
+  }
+  .prose-zinc hr {
+    border-color: #e4e4e7 !important;
+    margin: 18pt 0 !important;
+  }
+
+  /* Inline code: same chip feel as runtime */
+  .prose-zinc :not(pre) > code,
+  :not(pre) > code.inline-code {
+    background: #f4f4f5 !important;
+    border: 1px solid #e4e4e7 !important;
+    color: #18181b !important;
+    padding: 0.5pt 5pt !important;
+    border-radius: 5pt !important;
+    font-size: 0.92em !important;
+    font-weight: 600 !important;
+    box-shadow: none !important;
+  }
+  .prose-zinc code::before,
+  .prose-zinc code::after {
+    content: "" !important;
+    display: none !important;
+  }
+
+  /* Block code window — same chrome as runtime (dots + label + badge) */
+  .group.relative.my-6,
+  pre {
+    page-break-inside: avoid;
+    break-inside: avoid;
+  }
+
+  .group.relative.my-6 > div:first-child,
+  .export-code {
+    border: 1px solid #d4d4d8 !important;
+    border-radius: 10pt !important;
+    background: #ffffff !important;
+    box-shadow: 0 1pt 0 rgba(0, 0, 0, 0.04) !important;
+    overflow: hidden !important;
+    margin: 10pt 0 !important;
+  }
+
+  /* Window header */
+  .group.relative.my-6 > div:first-child > div:first-child {
+    background: linear-gradient(180deg, #fafafa, #f4f4f5) !important;
+    border-bottom: 1px solid #e4e4e7 !important;
+    padding: 5pt 10pt !important;
+  }
+
+  /* Copy button visible in print? hide it */
+  .group.relative.my-6 button[aria-label],
+  .group.relative.my-6 button[type='button'],
+  .group.relative.my-6 [class*='rounded-md'][class*='border'][class*='px-2'] {
+    display: none !important;
+  }
+
+  pre {
+    background: #ffffff !important;
+    color: #111113 !important;
+    border: 0 !important;
+    padding: 7pt 10pt !important;
+    margin: 0 !important;
+    font-size: 8.7pt !important;
+    line-height: 1.55 !important;
+    page-break-inside: avoid;
+    break-inside: avoid;
+    white-space: pre-wrap !important;
+    word-break: break-word !important;
+  }
+
+  pre code {
+    background: transparent !important;
+    color: #111113 !important;
+    padding: 0 !important;
+    font-size: inherit !important;
+  }
+
+  /* Token colors tuned for monochrome prints (strong contrast) */
+  .hljs,
+  .hljs * {
+    background: transparent !important;
+    color: #111113 !important;
+  }
+  .hljs-keyword,
+  .hljs-literal,
+  .hljs-symbol,
+  .hljs-bullet,
+  .hljs-link,
+  .hljs-meta-keyword,
+  .hljs-selector-id,
+  .hljs-type,
+  .hljs-built_in,
+  .hljs-selector-tag {
+    color: #5b21b6 !important;
+    font-weight: 600 !important;
+  }
+  .hljs-string,
+  .hljs-regexp,
+  .hljs-addition,
+  .hljs-meta-string {
+    color: #92400e !important;
+  }
+  .hljs-attr,
+  .hljs-attribute {
+    color: #1d4ed8 !important;
+  }
+  .hljs-number,
+  .hljs-variable,
+  .hljs-template-variable,
+  .hljs-class .hljs-title,
+  .hljs-params,
+  .hljs-link_label,
+  .hljs-selector-attr,
+  .hljs-selector-pseudo {
+    color: #a16207 !important;
+  }
+  .hljs-title,
+  .hljs-section,
+  .hljs-doctag,
+  .hljs-name,
+  .hljs-strong {
+    color: #0a0a0a !important;
+    font-weight: 600 !important;
+  }
+  .hljs-comment,
+  .hljs-code,
+  .hljs-quote {
+    color: #6b7280 !important;
+    font-style: italic !important;
+  }
+
+  /* Tables */
+  .prose-zinc table,
+  table {
+    border-collapse: separate !important;
+    border-spacing: 0 !important;
+    border: 1px solid #e4e4e7 !important;
+    border-radius: 8pt !important;
+    overflow: hidden !important;
+    background: #ffffff !important;
+    color: #0a0a0a !important;
+    font-size: 9.5pt !important;
+    margin: 10pt 0 !important;
+    page-break-inside: avoid;
+    break-inside: avoid;
+    width: 100% !important;
+    max-width: 100% !important;
+  }
+
+  .prose-zinc table thead th,
+  thead th {
+    background: linear-gradient(180deg, #f4f4f5, #fafafa) !important;
+    border-bottom: 1px solid #d4d4d8 !important;
+    color: #18181b !important;
+    font-weight: 700 !important;
+    letter-spacing: 0.05em !important;
+    text-transform: uppercase !important;
+    font-size: 8.5pt !important;
+    padding: 5pt 8pt !important;
+    text-align: left !important;
+  }
+
+  .prose-zinc table tbody td,
+  tbody td {
+    border-bottom: 1px solid #e4e4e7 !important;
+    padding: 5pt 8pt !important;
+    color: #18181b !important;
+    vertical-align: top !important;
+  }
+  .prose-zinc table tbody tr:last-child td,
+  tbody tr:last-child td {
+    border-bottom: 0 !important;
+  }
+  .prose-zinc table tbody tr:nth-child(even) td,
+  tbody tr:nth-child(even) td {
+    background: #fafafa !important;
+  }
+
+  /* Blockquote: runtime-same 4px left bar + soft card bg */
+  .prose-zinc blockquote,
+  blockquote {
+    margin: 10pt 0 !important;
+    padding: 6pt 10pt !important;
+    border-left: 4pt solid #a1a1aa !important;
+    border-radius: 0 7pt 7pt 0 !important;
+    background: #fafafa !important;
+    color: #18181b !important;
+    page-break-inside: avoid;
+    break-inside: avoid;
+  }
+  .prose-zinc blockquote > :first-child,
+  blockquote > :first-child {
+    margin-top: 0 !important;
+  }
+  .prose-zinc blockquote > :last-child,
+  blockquote > :last-child {
+    margin-bottom: 0 !important;
+  }
+
+  /* Mermaid diagram windows in print (captured as ink-saver version) */
+  .export-mermaid,
+  [class*='rounded-2xl'][class*='border'][class*='my-6'] {
+    page-break-inside: avoid;
+    break-inside: avoid;
+    border: 1px solid #e4e4e7 !important;
+    border-radius: 10pt !important;
+    background: #ffffff !important;
+    overflow: hidden !important;
+    margin: 10pt 0 !important;
+    box-shadow: none !important;
+  }
+  .export-mermaid-header,
+  [class*='rounded-2xl'] [class*='border-b'][class*='bg-zinc'] {
+    background: linear-gradient(180deg, #fafafa, #f4f4f5) !important;
+    border-bottom: 1px solid #e4e4e7 !important;
+    padding: 5pt 10pt !important;
+  }
+  .export-mermaid-body,
+  [class*='rounded-2xl'] [class*='overflow-x-auto'][class*='bg-white'],
+  [class*='rounded-2xl'] [class*='bg-white'][class*='p-5'] {
+    background: #ffffff !important;
+    padding: 10pt !important;
+  }
+
+  /* Chrome elements hidden in print */
+  aside,
+  header,
+  nav,
+  .sidebar-switch-bar,
+  .sidebar-panel-root,
+  #doc-scroll header,
+  [aria-label='切换主题'],
+  [aria-label='打开菜单'],
+  [id*='mobile'],
+  button[id],
+  [class*='sticky top-0'] {
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+}
+
+/* ===== Prose overrides - Dark borders & better contrast ===== */
+html.dark .prose-zinc.prose-invert,
+html[data-theme='dark'] .prose-zinc.prose-invert {
+  --tw-prose-headings: #fafafa;
+  --tw-prose-bold: #fafafa;
+  --tw-prose-links: #a5b4fc;
+  --tw-prose-links-hover: #c7d2fe;
+  --tw-prose-counters: #a1a1aa;
+  --tw-prose-quotes: #e4e4e7;
+  --tw-prose-quote-borders: #27272a;
+  --tw-prose-hr: #27272a;
+  --tw-prose-th-borders: #27272a;
+  --tw-prose-td-borders: #18181b;
+  --tw-prose-code: #e4e4e7;
+}
+
+html.dark .prose-zinc.prose-invert table th,
+html.dark .prose-zinc.prose-invert table td,
+html[data-theme='dark'] .prose-zinc.prose-invert table th,
+html[data-theme='dark'] .prose-zinc.prose-invert table td {
+  border-color: #27272a;
+}
+
+html.dark .prose-zinc.prose-invert thead th,
+html[data-theme='dark'] .prose-zinc.prose-invert thead th {
+  border-bottom-color: #3f3f46;
+}
+
+html.dark .prose-zinc.prose-invert blockquote,
+html[data-theme='dark'] .prose-zinc.prose-invert blockquote {
+  border-left-color: #3f3f46;
+  color: #d4d4d8;
+  background: linear-gradient(180deg, rgba(39, 39, 42, 0.5), rgba(24, 24, 27, 0.3));
+}
+
+html.dark .prose-zinc.prose-invert hr,
+html[data-theme='dark'] .prose-zinc.prose-invert hr {
+  border-color: #27272a;
+}
+
+/* Subtle border glow for dark mode buttons/cards on hover */
+html.dark .dark-border-glow,
+html[data-theme='dark'] .dark-border-glow {
+  position: relative;
+}
+
+/* HLJS dark mode tune-ups for github-dark-dimmed to match app bg
+   and tone down default pure-white text so code doesn't look too bright. */
+html.dark .hljs,
+html[data-theme='dark'] .hljs {
+  background: transparent !important;
+  padding: 0 !important;
+  color: #bcc2cc !important;
+}
+
+html.dark .hljs-title,
+html.dark .hljs-section,
+html.dark .hljs-selector-tag,
+html.dark .hljs-doctag,
+html.dark .hljs-name,
+html.dark .hljs-strong,
+html[data-theme='dark'] .hljs-title,
+html[data-theme='dark'] .hljs-section,
+html[data-theme='dark'] .hljs-selector-tag,
+html[data-theme='dark'] .hljs-doctag,
+html[data-theme='dark'] .hljs-name,
+html[data-theme='dark'] .hljs-strong {
+  color: #cbd0d8 !important;
+}
+
+html.dark .hljs-keyword,
+html.dark .hljs-literal,
+html.dark .hljs-symbol,
+html.dark .hljs-bullet,
+html.dark .hljs-link,
+html.dark .hljs-meta-keyword,
+html.dark .hljs-selector-id,
+html.dark .hljs-type,
+html.dark .hljs-built_in,
+html[data-theme='dark'] .hljs-keyword,
+html[data-theme='dark'] .hljs-literal,
+html[data-theme='dark'] .hljs-symbol,
+html[data-theme='dark'] .hljs-bullet,
+html[data-theme='dark'] .hljs-link,
+html[data-theme='dark'] .hljs-meta-keyword,
+html[data-theme='dark'] .hljs-selector-id,
+html[data-theme='dark'] .hljs-type,
+html[data-theme='dark'] .hljs-built_in {
+  color: #f472b6 !important;
+}
+
+html.dark .hljs-string,
+html.dark .hljs-regexp,
+html.dark .hljs-addition,
+html.dark .hljs-meta-string,
+html[data-theme='dark'] .hljs-string,
+html[data-theme='dark'] .hljs-regexp,
+html[data-theme='dark'] .hljs-addition,
+html[data-theme='dark'] .hljs-meta-string {
+  color: #fdba74 !important;
+}
+
+html.dark .hljs-attr,
+html.dark .hljs-attribute,
+html[data-theme='dark'] .hljs-attr,
+html[data-theme='dark'] .hljs-attribute {
+  color: #93c5fd !important;
+}
+
+html.dark .hljs-number,
+html.dark .hljs-variable,
+html.dark .hljs-template-variable,
+html.dark .hljs-class .hljs-title,
+html.dark .hljs-params,
+html.dark .hljs-link_label,
+html.dark .hljs-selector-attr,
+html.dark .hljs-selector-pseudo,
+html[data-theme='dark'] .hljs-number,
+html[data-theme='dark'] .hljs-variable,
+html[data-theme='dark'] .hljs-template-variable,
+html[data-theme='dark'] .hljs-class .hljs-title,
+html[data-theme='dark'] .hljs-params,
+html[data-theme='dark'] .hljs-link_label,
+html[data-theme='dark'] .hljs-selector-attr,
+html[data-theme='dark'] .hljs-selector-pseudo {
+  color: #fbbf24 !important;
+}
+
+html.dark .hljs-comment,
+html.dark .hljs-code,
+html.dark .hljs-quote,
+html[data-theme='dark'] .hljs-comment,
+html[data-theme='dark'] .hljs-code,
+html[data-theme='dark'] .hljs-quote {
+  color: #71717a !important;
+}
+
+/* Sidebar switcher — no-white-flash dark mode & smooth cross-fade
+   between file-tree and TOC tabs.
+
+   Strategy (zero empty frames, no unmount/layout jump):
+   - Panels are always rendered & visible, stacked absolute.
+   - Inactive panel stays parked at its "exit offset + 0 opacity"
+     which doubles as its own entry start-state.
+   - Toggling .is-active animates both panels in opposite directions
+     on the SAME animation frame (identical duration & easing), so
+     there is never a transparent gap.
+*/
+
+.sidebar-panel-root {
+  position: relative;
+  isolation: isolate;
+  background: #ffffff;
+  border-radius: 14px;
+  padding-right: 0.15rem;
+  outline: 1px solid transparent;
+  transition: background-color 160ms ease;
+}
+
+html.dark .sidebar-panel-root,
+html[data-theme='dark'] .sidebar-panel-root {
+  background: #05060a;
+  box-shadow: inset 0 0 0 1px rgba(39, 39, 42, 0.55);
+  outline: 1px solid rgba(39, 39, 42, 0.55);
+}
+
+.sidebar-panel {
+  position: absolute;
+  inset: 0;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding-right: 0.35rem;
+  padding-top: 0.25rem;
+  padding-bottom: 0.5rem;
+  visibility: visible;
+  transition:
+    opacity 200ms cubic-bezier(0.2, 0.7, 0.2, 1),
+    transform 200ms cubic-bezier(0.2, 0.7, 0.2, 1);
+  will-change: opacity, transform;
+  contain: layout style paint;
+}
+
+.sidebar-panel.is-active {
+  z-index: 2;
+  opacity: 1;
+  transform: translate3d(0, 0, 0);
+  pointer-events: auto;
+}
+
+/* Non-active panels are still visible (so crossfade / slide runs) but the
+   browser is free to skip off-screen work for them — content-visibility
+   means no layout / paint for the off-screen tree, which pays off
+   a lot when the file tree or TOC is large. */
+.sidebar-panel:not(.is-active) {
+  z-index: 1;
+  pointer-events: none;
+  content-visibility: auto;
+  contain-intrinsic-size: 1px 500px;
+}
+
+/* Parking position for INACTIVE panels.
+
+   Each panel keeps its FIXED direction class (files → in-left,
+   toc → in-right) for its entire lifetime. We ONLY toggle
+   .is-active on top, so transition is a true delta over the
+   SAME matched selector set, which CSS transitions require. */
+.sidebar-panel.in-left:not(.is-active) {
+  opacity: 0;
+  transform: translate3d(-12px, 0, 0);
+}
+
+.sidebar-panel.in-right:not(.is-active) {
+  opacity: 0;
+  transform: translate3d(12px, 0, 0);
+}
+
+/* Explicit overrides so directional classes never override the
+   resting (.is-active) transform/opacity. */
+.sidebar-panel.in-left.is-active,
+.sidebar-panel.in-right.is-active {
+  transform: translate3d(0, 0, 0);
+  opacity: 1;
+}
+
+/* Keep Markdown typography out of SVG labels; the viewport controls SVG size. */
+.mermaid-svg > svg {
+  display: block;
+  width: 100%;
+  height: auto;
+  max-width: none;
+}
+.mermaid-svg p { margin: 0; }
